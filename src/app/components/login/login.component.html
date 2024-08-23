@@ -1,0 +1,48 @@
+@if (errorMsg) {
+    <h3 class="alert alert-danger w-25 my-4 text-center mx-auto">{{errorMsg}}</h3>
+}
+
+<form [formGroup]="loginForm" (ngSubmit)="login()" class="w-50 mx-auto rounded my-4 shadow p-4">
+
+    <h2 class="text-center py-3">Login</h2>
+
+    <div>
+        <label for="">email</label>
+        <input type="email" class="form-control" formControlName="email" [ngClass]="{
+            'is-invalid' : loginForm.get('email')?.errors && loginForm.get('email')?.touched ,
+            'is-valid' : !loginForm.get('email')?.errors
+        }">
+
+@if (loginForm.get("email")?.touched) {
+    <div>
+        @if (loginForm.get('email')?.getError("required")) {
+            <p class="text-danger alert alert-danger">email is req</p>
+        }
+        @if (loginForm.get('email')?.getError('email')) {
+            <p class="text-danger alert alert-danger">email is not valid</p>
+        }
+    </div>
+}
+    </div>
+    <div>
+        <label for="">password</label>
+        <input type="password" class="form-control" formControlName="password" [ngClass]="{
+            'is-invalid' : loginForm.get('password')?.errors && loginForm.get('password')?.touched ,
+            'is-valid' : !loginForm.get('password')?.errors
+        }">
+
+@if (loginForm.get("password")?.touched) {
+    <div>
+        @if (loginForm.get('password')?.getError("required")) {
+            <p class="text-danger alert alert-danger">password is req</p>
+        }
+        @if (loginForm.get('password')?.getError('pattern')) {
+            <p class="text-danger alert alert-danger">password is not valid</p>
+        }
+    </div>
+}
+    </div>
+
+
+    <button type="submit" class="btn btn-primary my-3" [disabled]="loginForm.invalid">Login</button>
+</form>

@@ -1,0 +1,99 @@
+@if (errorMsg) {
+    <h3 class="alert alert-danger w-25 my-4 text-center mx-auto">{{errorMsg}}</h3>
+}
+
+<form [formGroup]="signupForm" (ngSubmit)="signup()" class="w-50 mx-auto rounded my-4 shadow p-4">
+
+    <h2 class="text-center py-3">Register</h2>
+    <div>
+        <label for="">name</label>
+        <input type="text" class="form-control" formControlName="name" [ngClass]="{
+            'is-invalid' : signupForm.get('name')?.errors && signupForm.get('name')?.touched ,
+            'is-valid' : !signupForm.get('name')?.errors
+        }">
+
+        @if (signupForm.get("name")?.touched) {
+            <div>
+                @if (signupForm.get('name')?.getError("required")) {
+                    <p class="text-danger alert alert-danger">name is req</p>
+                }
+                @if (signupForm.get('name')?.getError('minlength')) {
+                    <p class="text-danger alert alert-danger">name must be greater than 3 characters</p>
+                }
+            </div>
+        }
+    </div>
+    <div>
+        <label for="">email</label>
+        <input type="email" class="form-control" formControlName="email" [ngClass]="{
+            'is-invalid' : signupForm.get('email')?.errors && signupForm.get('email')?.touched ,
+            'is-valid' : !signupForm.get('email')?.errors
+        }">
+
+@if (signupForm.get("email")?.touched) {
+    <div>
+        @if (signupForm.get('email')?.getError("required")) {
+            <p class="text-danger alert alert-danger">email is req</p>
+        }
+        @if (signupForm.get('email')?.getError('email')) {
+            <p class="text-danger alert alert-danger">email is not valid</p>
+        }
+    </div>
+}
+    </div>
+    <div>
+        <label for="">password</label>
+        <input type="password" class="form-control" formControlName="password" [ngClass]="{
+            'is-invalid' : signupForm.get('password')?.errors && signupForm.get('password')?.touched ,
+            'is-valid' : !signupForm.get('password')?.errors
+        }">
+
+@if (signupForm.get("password")?.touched) {
+    <div>
+        @if (signupForm.get('password')?.getError("required")) {
+            <p class="text-danger alert alert-danger">password is req</p>
+        }
+        @if (signupForm.get('password')?.getError('pattern')) {
+            <p class="text-danger alert alert-danger">password is not valid</p>
+        }
+    </div>
+}
+    </div>
+    <div>
+        <label for="">age</label>
+        <input type="number" class="form-control" formControlName="age" [ngClass]="{
+            'is-invalid' : signupForm.get('age')?.errors && signupForm.get('age')?.touched ,
+            'is-valid' : !signupForm.get('age')?.errors
+        }">
+        @if (signupForm.get("age")?.touched) {
+            <div>
+                @if (signupForm.get('age')?.getError("required")) {
+                    <p class="text-danger alert alert-danger">age is req</p>
+                }
+                @if (signupForm.get('age')?.getError('min')) {
+                    <p class="text-danger alert alert-danger">age must be greater than 20</p>
+                }
+            </div>
+        }
+    </div>
+    <div>
+        <label for="">phone</label>
+        <input type="tel" class="form-control" formControlName="phone"[ngClass]="{
+            'is-invalid' : signupForm.get('phone')?.errors && signupForm.get('phone')?.touched ,
+            'is-valid' : !signupForm.get('phone')?.errors
+        }">
+
+@if (signupForm.get("phone")?.touched) {
+    <div>
+        @if (signupForm.get('phone')?.getError("required")) {
+            <p class="text-danger alert alert-danger">phone is req</p>
+        }
+        @if (signupForm.get('phone')?.getError('patter')) {
+            <p class="text-danger alert alert-danger">must be egyptian phone number</p>
+        }
+    </div>
+}
+    </div>
+
+    <button type="submit" class="btn btn-primary my-3" [disabled]="signupForm.invalid">Signup</button>
+</form>
